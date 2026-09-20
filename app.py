@@ -114,9 +114,17 @@ with tab_image:
                     # Each of these must have its .traineddata file installed
                     # (tick them in the Tesseract Windows installer, or
                     # `sudo apt install tesseract-ocr-rus` etc. on Linux).
-                    lang_codes = "eng+rus+ara+ell+hin+tam+mal+kan"
+                    lang_codes = (
+    "eng+fra+spa+por+ita+deu+nld+rus+ell+ara+tur+"
+    "swe+dan+hin+tam+mal+kan"
+)
                     try:
-                        extracted_text = pytesseract.image_to_string(image, lang=lang_codes)
+                        config = "--oem 3 --psm 6"
+                        extracted_text = pytesseract.image_to_string(
+    image,
+    lang=lang_codes,
+    config=config
+)
                     except pytesseract.pytesseract.TesseractError:
                         # Fallback if some of those language packs aren't installed
                         extracted_text = pytesseract.image_to_string(image)
