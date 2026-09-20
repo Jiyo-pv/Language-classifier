@@ -3,7 +3,6 @@ joblib
 pandas
 numpy
 pillow
-scikit-learn
-paddleocr
-paddlepaddle
 opencv-python-headless
+scikit-learn
+pytesseract
