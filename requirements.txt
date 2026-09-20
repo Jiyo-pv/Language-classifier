@@ -1,10 +1,9 @@
 streamlit
 joblib
 pandas
-pillow
 numpy
+pillow
 scikit-learn
-easyocr
-torch
-torchvision
+paddleocr
+paddlepaddle
 opencv-python-headless
