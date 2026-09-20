@@ -32,11 +32,12 @@ def load_model():
 @st.cache_resource
 def load_reader():
     return easyocr.Reader(
-        ['en','fr','es','pt','it','de','nl','ru',
-         'el','ar','tr','sv','da','hi','ta','ml','kn'],
+        [
+            "en", "fr", "es", "pt", "it", "de", "nl",
+            "ru", "el", "ar", "tr", "hi", "ta", "ml", "kn"
+        ],
         gpu=False
     )
-
 model = load_model()
 reader = load_reader()
 
