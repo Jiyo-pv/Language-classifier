@@ -6,25 +6,25 @@ import pandas as pd
 MODEL_PATH = "model.joblib"
 
 FLAGS = {
-    "English":"🇬🇧",
-    "French":"🇫🇷",
-    "Spanish":"🇪🇸",
-    "Portuguese":"🇵🇹",
-    "Portugeese":"🇵🇹",
-    "Italian":"🇮🇹",
-    "German":"🇩🇪",
-    "Dutch":"🇳🇱",
-    "Russian":"🇷🇺",
-    "Greek":"🇬🇷",
-    "Arabic":"🇸🇦",
-    "Turkish":"🇹🇷",
-    "Swedish":"🇸🇪",
-    "Danish":"🇩🇰",
-    "Hindi":"🇮🇳",
-    "Tamil":"🇮🇳",
-    "Malayalam":"🇮🇳",
-    "Kannada":"🇮🇳",
-    "Sanskrit":"🇮🇳"
+    "English": "🇬🇧",
+    "French": "🇫🇷",
+    "Spanish": "🇪🇸",
+    "Portuguese": "🇵🇹",
+    "Portugeese": "🇵🇹",
+    "Italian": "🇮🇹",
+    "German": "🇩🇪",
+    "Dutch": "🇳🇱",
+    "Russian": "🇷🇺",
+    "Greek": "🇬🇷",
+    "Arabic": "🇸🇦",
+    "Turkish": "🇹🇷",
+    "Swedish": "🇸🇪",
+    "Danish": "🇩🇰",
+    "Hindi": "🇮🇳",
+    "Tamil": "🇮🇳",
+    "Malayalam": "🇮🇳",
+    "Kannada": "🇮🇳",
+    "Sanskrit": "🇮🇳"
 }
 
 st.set_page_config(
@@ -33,11 +33,14 @@ st.set_page_config(
     layout="centered"
 )
 
-st.title("🌐 Language Detector")
-st.write("Detect the language of any typed or pasted text using Machine Learning.")
+st.title("🌐 Multilingual Language Detector")
+st.write(
+    "Detect the language of typed or pasted text using a "
+    "Linear SVM machine learning model."
+)
 
 if not os.path.exists(MODEL_PATH):
-    st.error("model.joblib not found.")
+    st.error("model.joblib not found. Train the model first.")
     st.stop()
 
 @st.cache_resource
@@ -47,7 +50,7 @@ def load_model():
 model = load_model()
 
 text = st.text_area(
-    "Enter text",
+    "Enter Text",
     height=180,
     placeholder="Type or paste text in any supported language..."
 )
@@ -64,23 +67,26 @@ if st.button("Detect Language", type="primary"):
 
     confidence = max(probabilities) * 100
 
-    st.success(f"{FLAGS.get(prediction,'🏳️')} **{prediction}**")
+    st.markdown(f"## {FLAGS.get(prediction,'🏳️')} {prediction}")
     st.progress(int(confidence))
     st.caption(f"Confidence: {confidence:.1f}%")
 
     st.subheader("Top 5 Predictions")
 
-    df = pd.DataFrame({
-        "Language": classes,
-        "Confidence (%)": probabilities * 100
-    }).sort_values("Confidence (%)", ascending=False).head(5)
-
-    st.bar_chart(df.set_index("Language"))
-    st.dataframe(
-        df.round(1),
-        hide_index=True,
-        use_container_width=True
+    df = (
+        pd.DataFrame({
+            "Language": classes,
+            "Confidence (%)": probabilities * 100
+        })
+        .sort_values("Confidence (%)", ascending=False)
+        .head(5)
+        .reset_index(drop=True)
     )
 
+    st.bar_chart(df.set_index("Language")["Confidence (%)"])
+    st.dataframe(df.round(1), hide_index=True, use_container_width=True)
+
 st.divider()
-st.caption("Model: TF-IDF Character N-grams + Multinomial Naive Bayes")
+st.caption(
+    "Machine Learning Model: TF-IDF Character N-grams + Linear Support Vector Machine (Linear SVM)"
+)
