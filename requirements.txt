@@ -1,6 +1,10 @@
 streamlit
-scikit-learn
-pandas
 joblib
-pytesseract
-Pillow
+pandas
+pillow
+numpy
+scikit-learn
+easyocr
+torch
+torchvision
+opencv-python-headless
