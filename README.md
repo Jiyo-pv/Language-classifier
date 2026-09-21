@@ -53,7 +53,7 @@ data/Language Detection.csv
 ## Installation
 
 ```bash
-git clone https://github.com/your-username/language-detection.git
+git clone https://github.com/Jiyo-pv/Language-classifier
 cd language-detection
 pip install -r requirements.txt
 ```
