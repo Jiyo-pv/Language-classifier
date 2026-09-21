@@ -1,4 +1,6 @@
 streamlit
-joblib
-pandas
 scikit-learn
+pandas
+joblib
+pytesseract
+Pillow
